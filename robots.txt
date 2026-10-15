@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://frankmagoba.github.io/sitemap.xml
