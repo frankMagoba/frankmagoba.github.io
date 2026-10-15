@@ -2,11 +2,11 @@ import { profile, experience, projects, skills, education, certifications } from
 import { answer, fallback } from "./ask.js";
 
 const COMMANDS = {
-  help: () => "Commands: about, experience, projects, skills, education, contact, links, resume, ask <question>, theme, clear, exit",
+  help: () => "Commands: about, experience, projects, project <name>, skills, education, contact, links, resume, ask <question>, theme, clear, exit\nAnything else is read as a question.",
   about: () => `${profile.name}, ${profile.title}, ${profile.location}\n\n${profile.intro}`,
   whoami: () => COMMANDS.about(),
   experience: () => experience.map((e) => `${e.start} to ${e.end}  ${e.role}, ${e.company}`).join("\n"),
-  projects: () => projects.map((p) => `${p.name.padEnd(20)} ${p.what}`).join("\n"),
+  projects: () => projects.map((p) => `${p.name.padEnd(32)} ${p.where}${p.dates ? ", " + p.dates : ""}`).join("\n") + "\n\nType 'project <name>' for details.",
   skills: () => Object.entries(skills).map(([k, v]) => `${k}: ${v.join(", ")}`).join("\n"),
   education: () => [...education.map((e) => `${e.degree}, ${e.school} (${e.end})`), ...certifications].join("\n"),
   contact: () => `email     ${profile.email}\nphone     ${profile.phone}\nlinkedin  ${profile.links.linkedin}\ngithub    ${profile.links.github}`,
@@ -16,6 +16,29 @@ const COMMANDS = {
   ls: () => "about  experience  projects  skills  education  contact  links  resume",
   sudo: () => "Nice try.",
 };
+
+const findProject = (q) => projects.find((p) => p.name.toLowerCase().includes(q.toLowerCase()));
+
+// Shared by the modal terminal and the inline ask widget.
+export async function runCommand(raw) {
+  const [cmd, ...rest] = raw.trim().split(/\s+/);
+  const name = cmd.toLowerCase();
+  const arg = rest.join(" ");
+  if (name === "ask") {
+    if (!arg) return "Usage: ask <question>";
+    const r = await answer(arg);
+    return r ? `${r.text}\n  (from: ${r.ref})` : fallback;
+  }
+  if (name === "project") {
+    const p = arg && findProject(arg);
+    if (!p) return "Usage: project <name>, for example: project optibus";
+    return [`${p.name} (${p.where}${p.dates ? ", " + p.dates : ""})`, p.what, p.role, `stack: ${p.stack.join(", ")}`, ...p.links.map(([l, h]) => `${l}: ${h}`), p.note || ""].filter(Boolean).join("\n");
+  }
+  if (COMMANDS[name]) return COMMANDS[name]();
+  // Anything else is treated as a question.
+  const r = await answer(raw);
+  return r ? `${r.text}\n  (from: ${r.ref})` : `command not found: ${cmd}. Try 'help', or just ask a question.`;
+}
 
 export function initTerminal() {
   const dlg = document.getElementById("term");
@@ -49,7 +72,7 @@ export function initTerminal() {
     if (e.key === "ArrowDown") { pos = Math.min(history.length, pos + 1); input.value = history[pos] ?? ""; e.preventDefault(); }
     if (e.key === "Tab") {
       e.preventDefault();
-      const hit = Object.keys(COMMANDS).concat("ask", "clear", "exit").filter((c) => c.startsWith(input.value));
+      const hit = Object.keys(COMMANDS).concat("ask", "project", "clear", "exit").filter((c) => c.startsWith(input.value));
       if (hit.length === 1) input.value = hit[0] + " ";
       else if (hit.length > 1) print(hit.join("  "));
     }
@@ -62,14 +85,9 @@ export function initTerminal() {
     if (!raw) return;
     history.push(raw); pos = history.length;
     print(`$ ${raw}`, "cmd");
-    const [cmd, ...rest] = raw.split(/\s+/);
-    const name = cmd.toLowerCase();
+    const name = raw.split(/\s+/)[0].toLowerCase();
     if (name === "clear") return out.replaceChildren();
     if (name === "exit") return dlg.close();
-    if (name === "ask") {
-      const r = rest.length ? await answer(rest.join(" ")) : null;
-      return print(r ? `${r.text}\n  (from: ${r.ref})` : rest.length ? fallback : "Usage: ask <question>");
-    }
-    print(COMMANDS[name] ? COMMANDS[name]() : `command not found: ${cmd}. Try 'help'.`);
+    print(await runCommand(raw));
   });
 }
