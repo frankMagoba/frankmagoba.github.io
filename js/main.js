@@ -1,4 +1,5 @@
-import { profile, experience, projects, projectTags, skills, education, certifications } from "./content.js";
+import { profile, experience, projects, projectTags, skills, education, certifications, certificates } from "./content.js";
+import { mountCertViewer } from "./certviewer.js";
 import { initTerminal, runCommand } from "./terminal.js";
 import { mountAskTerminal } from "./askterm.js";
 import { initHero } from "./hero.js";
@@ -47,7 +48,8 @@ $("#timeline").append(...experience.map((e) => el("li", {},
 
 $("#skill-list").append(...Object.entries(skills).map(([k, v]) => el("div", {}, el("h3", {}, k), tagList(v))));
 $("#edu").textContent = education.map((e) => `${e.degree}, ${e.school}, ${e.start} to ${e.end}`).join("; ");
-$("#certs").textContent = certifications.join(", ");
+$("#certs").innerHTML = `${certifications.join(", ")}. <a href="https://www.hackerrank.com/profile/franklinmagoba4" rel="noopener">HackerRank profile</a>.`;
+mountCertViewer($("#cert-viewer"), certificates, "assets/certs/");
 
 // Theme
 const root = document.documentElement;
