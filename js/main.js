@@ -17,13 +17,16 @@ $("#intro").textContent = profile.intro;
 $("#year").textContent = new Date().getFullYear();
 
 const cards = projects.map((p) => {
-  const links = el("p", { class: "links" }, ...p.links.map(([label, href]) => el("a", { href, rel: "noopener" }, label)));
+  const realLinks = (p.links || []).filter(([, href]) => href);
   const card = el("article", { class: "card proj", "data-tags": p.tags.join(" ") },
     el("div", { class: "proj-head" }, el("h3", {}, p.name), el("span", { class: "where" }, [p.where, p.dates].filter(Boolean).join(" · "))),
     el("p", {}, p.what + "."),
     el("p", { class: "role" }, el("strong", {}, "My part: "), p.role + "."),
     tagList(p.stack));
-  if (p.links.length) card.append(links);
+  if (realLinks.length) {
+    card.append(el("p", { class: "links" }, ...realLinks.map(([label, href]) =>
+      el("a", { href, target: "_blank", rel: "noopener noreferrer" }, label))));
+  }
   if (p.note) card.append(el("p", { class: "note" }, p.note));
   return card;
 });
