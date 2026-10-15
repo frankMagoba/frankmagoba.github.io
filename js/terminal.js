@@ -1,0 +1,75 @@
+import { profile, experience, projects, skills, education, certifications } from "./content.js";
+import { answer, fallback } from "./ask.js";
+
+const COMMANDS = {
+  help: () => "Commands: about, experience, projects, skills, education, contact, links, resume, ask <question>, theme, clear, exit",
+  about: () => `${profile.name}, ${profile.title}, ${profile.location}\n\n${profile.intro}`,
+  whoami: () => COMMANDS.about(),
+  experience: () => experience.map((e) => `${e.start} to ${e.end}  ${e.role}, ${e.company}`).join("\n"),
+  projects: () => projects.map((p) => `${p.name.padEnd(20)} ${p.what}`).join("\n"),
+  skills: () => Object.entries(skills).map(([k, v]) => `${k}: ${v.join(", ")}`).join("\n"),
+  education: () => [...education.map((e) => `${e.degree}, ${e.school} (${e.end})`), ...certifications].join("\n"),
+  contact: () => `email     ${profile.email}\nphone     ${profile.phone}\nlinkedin  ${profile.links.linkedin}\ngithub    ${profile.links.github}`,
+  links: () => Object.entries(profile.links).map(([k, v]) => `${k.padEnd(11)}${v}`).join("\n"),
+  resume: () => { location.href = "/Resume/"; return "Opening the resume..."; },
+  theme: () => { document.getElementById("theme").click(); return "Theme switched."; },
+  ls: () => "about  experience  projects  skills  education  contact  links  resume",
+  sudo: () => "Nice try.",
+};
+
+export function initTerminal() {
+  const dlg = document.getElementById("term");
+  const out = document.getElementById("term-out");
+  const input = document.getElementById("term-in");
+  const history = [];
+  let pos = 0;
+
+  const print = (text, cls) => {
+    const line = document.createElement("div");
+    if (cls) line.className = cls;
+    line.textContent = text;
+    out.append(line);
+    out.scrollTop = out.scrollHeight;
+  };
+  const open = () => {
+    if (!dlg.open) dlg.showModal();
+    if (!out.childElementCount) print("Type 'help' to see what's here.");
+    input.focus();
+  };
+
+  document.getElementById("term-open").addEventListener("click", open);
+  document.getElementById("term-close").addEventListener("click", () => dlg.close());
+  document.addEventListener("keydown", (e) => {
+    const typing = /INPUT|TEXTAREA/.test(document.activeElement?.tagName);
+    if (e.key === "`" && !typing) { e.preventDefault(); open(); }
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowUp" && history.length) { pos = Math.max(0, pos - 1); input.value = history[pos]; e.preventDefault(); }
+    if (e.key === "ArrowDown") { pos = Math.min(history.length, pos + 1); input.value = history[pos] ?? ""; e.preventDefault(); }
+    if (e.key === "Tab") {
+      e.preventDefault();
+      const hit = Object.keys(COMMANDS).concat("ask", "clear", "exit").filter((c) => c.startsWith(input.value));
+      if (hit.length === 1) input.value = hit[0] + " ";
+      else if (hit.length > 1) print(hit.join("  "));
+    }
+  });
+
+  document.getElementById("term-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const raw = input.value.trim();
+    input.value = "";
+    if (!raw) return;
+    history.push(raw); pos = history.length;
+    print(`$ ${raw}`, "cmd");
+    const [cmd, ...rest] = raw.split(/\s+/);
+    const name = cmd.toLowerCase();
+    if (name === "clear") return out.replaceChildren();
+    if (name === "exit") return dlg.close();
+    if (name === "ask") {
+      const r = rest.length ? await answer(rest.join(" ")) : null;
+      return print(r ? `${r.text}\n  (from: ${r.ref})` : rest.length ? fallback : "Usage: ask <question>");
+    }
+    print(COMMANDS[name] ? COMMANDS[name]() : `command not found: ${cmd}. Try 'help'.`);
+  });
+}
