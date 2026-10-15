@@ -1,4 +1,4 @@
-import { profile, experience, projects, skills, education, certifications } from "./content.js";
+import { profile, experience, projects, skills, education, certifications, certificates } from "./content.js";
 import { answer, fallback } from "./ask.js";
 
 const COMMANDS = {
@@ -8,7 +8,7 @@ const COMMANDS = {
   experience: () => experience.map((e) => `${e.start} to ${e.end}  ${e.role}, ${e.company}`).join("\n"),
   projects: () => projects.map((p) => `${p.name.padEnd(32)} ${p.where}${p.dates ? ", " + p.dates : ""}`).join("\n") + "\n\nType 'project <name>' for details.",
   skills: () => Object.entries(skills).map(([k, v]) => `${k}: ${v.join(", ")}`).join("\n"),
-  education: () => [...education.map((e) => `${e.degree}, ${e.school} (${e.end})`), ...certifications].join("\n"),
+  education: () => [...education.map((e) => `${e.degree}, ${e.school} (${e.end})`), ...certifications, "", "Certificates:", ...certificates.map((c) => `  ${c.title}`)].join("\n"),
   contact: () => `email     ${profile.email}\nphone     ${profile.phone}\nlinkedin  ${profile.links.linkedin}\ngithub    ${profile.links.github}`,
   links: () => Object.entries(profile.links).map(([k, v]) => `${k.padEnd(11)}${v}`).join("\n"),
   resume: () => { location.href = "/Resume/"; return "Opening the resume..."; },
