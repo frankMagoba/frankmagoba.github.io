@@ -1,6 +1,6 @@
-import { profile, experience, projects, skills, education, certifications } from "./content.js";
-import { answer, loadSemantic, fallback } from "./ask.js";
-import { initTerminal } from "./terminal.js";
+import { profile, experience, projects, projectTags, skills, education, certifications } from "./content.js";
+import { initTerminal, runCommand } from "./terminal.js";
+import { mountAskTerminal } from "./askterm.js";
 import { initHero } from "./hero.js";
 
 const $ = (s) => document.querySelector(s);
@@ -15,11 +15,30 @@ const tagList = (items) => el("ul", { class: "tags" }, ...items.map((t) => el("l
 $("#intro").textContent = profile.intro;
 $("#year").textContent = new Date().getFullYear();
 
-$("#projects").append(...projects.map((p) => {
+const cards = projects.map((p) => {
   const links = el("p", { class: "links" }, ...p.links.map(([label, href]) => el("a", { href, rel: "noopener" }, label)));
-  if (!p.links.length) links.append(el("span", { class: "muted small" }, "Demo on request"));
-  return el("article", { class: "card proj" }, el("h3", {}, p.name), el("span", { class: "where" }, p.where), el("p", {}, p.what), tagList(p.stack), links);
-}));
+  const card = el("article", { class: "card proj", "data-tags": p.tags.join(" ") },
+    el("div", { class: "proj-head" }, el("h3", {}, p.name), el("span", { class: "where" }, [p.where, p.dates].filter(Boolean).join(" · "))),
+    el("p", {}, p.what + "."),
+    el("p", { class: "role" }, el("strong", {}, "My part: "), p.role + "."),
+    tagList(p.stack));
+  if (p.links.length) card.append(links);
+  if (p.note) card.append(el("p", { class: "note" }, p.note));
+  return card;
+});
+$("#projects").append(...cards);
+const count = $("#proj-count");
+const filter = (key) => {
+  let n = 0;
+  for (const c of cards) { const show = key === "all" || c.dataset.tags.split(" ").includes(key); c.hidden = !show; n += show; }
+  count.textContent = `${n} project${n === 1 ? "" : "s"}`;
+};
+for (const [key, label] of Object.entries(projectTags)) {
+  const b = el("button", { type: "button", class: "chip", "aria-pressed": String(key === "all") }, label);
+  b.addEventListener("click", () => { $("#proj-filter").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); filter(key); });
+  $("#proj-filter").append(b);
+}
+filter("all");
 
 $("#timeline").append(...experience.map((e) => el("li", {},
   el("h3", {}, `${e.role}, ${e.company}`),
@@ -40,20 +59,9 @@ $("#theme").addEventListener("click", () => {
   localStorage.setItem("theme", root.dataset.theme);
 });
 
-// Ask box
-const out = $("#ask-out");
-$("#ask-form").addEventListener("submit", async (ev) => {
-  ev.preventDefault();
-  const q = $("#ask-input").value.trim();
-  if (!q) return;
-  const r = await answer(q);
-  out.replaceChildren(r ? el("p", {}, r.text, el("span", { class: "ref" }, `From: ${r.ref}`)) : el("p", {}, fallback));
-});
-$("#ask-smart").addEventListener("click", async (ev) => {
-  ev.target.disabled = true;
-  const status = $("#ask-status");
-  try { await loadSemantic((s) => (status.textContent = s)); }
-  catch { status.textContent = "Couldn't load the model, so keyword search stays on."; ev.target.disabled = false; }
+mountAskTerminal($("#askterm"), {
+  run: runCommand,
+  suggestions: ["has he done SRE work?", "project optibus", "what backend stack does he use?", "does he build mobile apps?", "projects", "contact"],
 });
 
 initTerminal();

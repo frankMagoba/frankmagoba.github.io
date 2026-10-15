@@ -22,6 +22,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/askterm.css">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Person","name":"Franklin Magoba","jobTitle":"Software Engineer",
    "url":"https://frankmagoba.github.io/","email":"mailto:franklinmagoba4@gmail.com","telephone":"+254725254911",
@@ -35,9 +36,9 @@
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header class="top">
-    <a class="brand" href="/" aria-label="Home"><img src="/favicon.svg" alt="" width="28" height="28"> <span>Franklin Magoba</span></a>
+    <a class="brand" href="/" aria-label="Franklin Magoba, home"><img src="/favicon.svg" alt="" width="28" height="28"> <span>Franklin Magoba</span></a>
     <nav aria-label="Main">
-      <a href="#work">Work</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+      <a href="#work">Projects</a><a href="#ask">Ask</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
       <a href="/Resume/">Resume</a>
       <button id="term-open" class="ghost" type="button" aria-haspopup="dialog" title="Open terminal (press `)">&gt;_</button>
       <button id="theme" class="ghost" type="button" title="Toggle light and dark theme"><span aria-hidden="true">◐</span><span class="sr">Theme</span></button>
@@ -61,20 +62,16 @@
       </div>
     </section>
 
-    <section id="ask" class="card ask" aria-labelledby="ask-title">
+    <section id="ask" aria-labelledby="ask-title">
       <h2 id="ask-title">Ask about Franklin</h2>
-      <p class="muted small">Answers come straight from this page's content. Nothing you type leaves your browser.</p>
-      <form id="ask-form" class="ask-row">
-        <label for="ask-input" class="sr">Your question</label>
-        <input id="ask-input" type="text" placeholder="Has he done SRE work?" autocomplete="off" required>
-        <button class="btn" type="submit">Ask</button>
-      </form>
-      <div id="ask-out" class="ask-out" aria-live="polite"></div>
-      <p class="small"><button id="ask-smart" class="link" type="button">Turn on smart search</button> <span id="ask-status" class="muted"></span></p>
+      <div id="askterm"></div>
     </section>
 
     <section id="work" aria-labelledby="work-title">
-      <h2 id="work-title">Selected work</h2>
+      <h2 id="work-title">Projects</h2>
+      <p class="muted">Everything I've shipped or built, with live links where the product is public. Filter by area.</p>
+      <div id="proj-filter" class="filter" role="group" aria-label="Filter projects by area"></div>
+      <p id="proj-count" class="muted small" aria-live="polite"></p>
       <div id="projects" class="grid"></div>
     </section>
 

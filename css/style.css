@@ -45,3 +45,12 @@ dialog#term[open]{display:flex;flex-direction:column}dialog::backdrop{background
 .mono .on.f{background:var(--accent)}
 .mono.built .on{opacity:1;transform:none}
 .mono.still .on{transition:none}
+/* Projects */
+.filter{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 .5rem}
+.chip{font:600 .8rem var(--mono);padding:.3rem .75rem;border-radius:999px;border:1px solid var(--line);background:none;color:var(--muted);cursor:pointer}
+.chip[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.proj{display:flex;flex-direction:column}.proj[hidden]{display:none}
+.proj-head{display:flex;flex-direction:column;gap:.1rem}
+.proj .role{font-size:.92rem;color:var(--muted)}.proj .role strong{color:var(--text);font-weight:600}
+.proj .note{margin-top:auto;font:.8rem var(--mono);color:var(--muted)}
+.proj .links{margin-top:auto}
