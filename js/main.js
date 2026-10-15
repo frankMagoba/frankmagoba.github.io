@@ -1,6 +1,7 @@
 import { profile, experience, projects, skills, education, certifications } from "./content.js";
 import { answer, loadSemantic, fallback } from "./ask.js";
 import { initTerminal } from "./terminal.js";
+import { initHero } from "./hero.js";
 
 const $ = (s) => document.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -56,3 +57,4 @@ $("#ask-smart").addEventListener("click", async (ev) => {
 });
 
 initTerminal();
+initHero(document.getElementById("mono"));

@@ -36,3 +36,12 @@ dialog#term[open]{display:flex;flex-direction:column}dialog::backdrop{background
 .term-line{display:flex;gap:.5rem;padding:.5rem .75rem;border-top:1px solid #1e293b}.term-line label{color:#2dd4bf}.term-line input{flex:1;background:none;border:0;color:#e2e8f0;font:inherit}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 @media (max-width:640px){nav a:not([href="/Resume/"]){display:none}.ask-row{flex-direction:column}}
+/* Hero monogram */
+.hero{display:grid;grid-template-columns:minmax(0,1fr);gap:2rem;align-items:center}
+@media (min-width:860px){.hero{grid-template-columns:1fr 260px}.mono{order:2}}
+.mono{display:grid;grid-template-columns:repeat(11,1fr);gap:4px;width:min(260px,60vw);aspect-ratio:11/7}
+.mono .b{border-radius:2px;background:color-mix(in srgb,var(--muted) 10%,transparent)}
+.mono .on{background:color-mix(in srgb,var(--text) 78%,transparent);opacity:0;transform:translate(var(--dx,0),var(--dy,0));transition:opacity 900ms ease-out var(--d,0ms),transform 1400ms cubic-bezier(.2,.7,.2,1) var(--d,0ms)}
+.mono .on.f{background:var(--accent)}
+.mono.built .on{opacity:1;transform:none}
+.mono.still .on{transition:none}
