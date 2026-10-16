@@ -20,8 +20,8 @@ const cards = projects.map((p) => {
   const realLinks = (p.links || []).filter(([, href]) => href);
   const card = el("article", { class: "card proj", "data-tags": p.tags.join(" ") },
     el("div", { class: "proj-head" }, el("h3", {}, p.name), el("span", { class: "where" }, [p.where, p.dates].filter(Boolean).join(" · "))),
-    el("p", {}, p.what + "."),
-    el("p", { class: "role" }, el("strong", {}, "My part: "), p.role + "."),
+    el("p", { class: "pwhat" }, p.what + "."),
+    el("p", { class: "pwork" }, p.role + "."),
     tagList(p.stack));
   if (realLinks.length) {
     card.append(el("p", { class: "links" }, ...realLinks.map(([label, href]) =>
