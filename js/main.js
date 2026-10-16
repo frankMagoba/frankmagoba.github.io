@@ -12,6 +12,7 @@ const el = (tag, attrs = {}, ...kids) => {
 };
 const tagList = (items) => el("ul", { class: "tags" }, ...items.map((t) => el("li", {}, t)));
 
+$("#lead").textContent = profile.tagline;
 $("#intro").textContent = profile.intro;
 $("#year").textContent = new Date().getFullYear();
 

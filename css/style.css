@@ -46,7 +46,8 @@ button.link{background:none;border:0;padding:0;color:var(--accent);text-decorati
 .timeline>li::before{content:"";position:absolute;left:-7px;top:.45rem;width:12px;height:12px;border-radius:50%;background:var(--accent)}
 .timeline h3{margin:0}.timeline .meta{font:.85rem var(--mono);color:var(--muted)}.timeline ul{margin:.5rem 0 0;padding-left:1.1rem}
 .skills{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}.skills h3{margin:0 0 .35rem;font:600 .85rem var(--mono);color:var(--accent)}
-.contact{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
+.contact-lead{margin:0 0 1rem;max-width:36rem}
+.contact-cta{margin-top:0;max-width:42rem}
 .ask-row{display:flex;gap:.5rem}.ask-row input{flex:1;min-width:0;padding:.6rem .8rem;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit}
 .ask-out{min-height:1.5rem;margin-top:1rem}.ask-out .ref{display:block;font:.8rem var(--mono);color:var(--muted)}
 .foot{text-align:center;padding:2rem;border-top:1px solid var(--line)}kbd{font-family:var(--mono);border:1px solid var(--line);border-radius:4px;padding:0 .3rem}
