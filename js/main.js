@@ -65,7 +65,7 @@ $("#theme").addEventListener("click", () => {
 
 mountAskTerminal($("#askterm"), {
   run: runCommand,
-  suggestions: ["has he done SRE work?", "project optibus", "what backend stack does he use?", "does he build mobile apps?", "projects", "contact"],
+  suggestions: ["has he done SRE work?", "optibus", "what backend stack does he use?", "does he build mobile apps?", "projects", "contact"],
 });
 
 initTerminal();

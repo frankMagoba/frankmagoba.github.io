@@ -12,7 +12,7 @@ export function mountAskTerminal(root, { run, suggestions, title = "ask-franklin
     <div class="aterm-log" aria-hidden="true"></div>
     <p class="sr" role="status" aria-live="polite"></p>
     <form class="aterm-line"><label class="aterm-ps1" for="${title}-in">franklin@portfolio:~$</label>
-      <input id="${title}-in" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="ask has he run kubernetes in production?"></form>
+      <input id="${title}-in" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="optibus, or: has he done SRE work?"></form>
     <div class="aterm-chips" role="group" aria-label="Suggested questions"></div>`;
   const log = root.querySelector(".aterm-log");
   const live = root.querySelector('[role="status"]');
@@ -51,7 +51,7 @@ export function mountAskTerminal(root, { run, suggestions, title = "ask-franklin
     try { await loadSemantic((s) => line(`# ${s}`, "note")); smart.textContent = "smart search: on"; smart.setAttribute("aria-pressed", "true"); }
     catch { line("# Couldn't load the model, so keyword search stays on.", "note"); smart.textContent = "smart search: off"; smart.disabled = false; }
   });
-  line("# Ask anything about my work, or type help. Answers quote this site and stay in your browser.", "note");
+  line("# Ask about my work, type a project name, or help. Answers only quote this page.", "note");
 }
 
 // Default runner for a page without the full command set.
