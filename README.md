@@ -1,11 +1,31 @@
 # frankmagoba.github.io
 
-My personal site, live at https://frankmagoba.github.io/.
+Personal site for Franklin Magoba — https://frankmagoba.github.io/
 
-Plain HTML, CSS and ES modules with no build step. GitHub Pages serves the `master` branch root as-is.
+Static HTML, CSS and ES modules. No build, no framework. GitHub Pages publishes the `master` branch root as-is. Push and it’s live.
 
-- `js/content.js` holds every fact on the page. The project cards, the timeline, the terminal and the "Ask" box all read from it.
-- `js/ask.js` matches questions against that content by keyword. "Smart search" loads a small embedding model (all-MiniLM-L6-v2 through transformers.js) in the browser, only once someone clicks it. It never generates text, so it can only quote what's already here.
-- Press the backtick key, or the `>_` button, to open the terminal.
+## What’s on the page
 
-Run it locally with any static server, for example `python3 -m http.server 8000`, then open http://localhost:8000.
+- Hero with portrait, short intro, and a labeled contact panel (email, resume, LinkedIn, GitHub).
+- Project grid with area filters, driven by `js/content.js`.
+- Experience timeline, skills, education and certificate thumbnails.
+- Ask box (`js/askterm.js`) that answers from the same content by keyword first. Optional “smart search” loads all-MiniLM-L6-v2 in the browser via transformers.js and only quotes what’s already on the page — it doesn’t invent answers.
+- Full terminal: press `` ` `` or the `>_` control. Commands live in `js/terminal.js`.
+
+`js/content.js` is the source of truth for facts. Keep it in sync with the copy in the [Resume](https://github.com/frankMagoba/Resume) repo when you change experience or projects.
+
+Type uses SF Pro Text / Display on Apple (Helvetica Neue elsewhere). The terminal stays monospace.
+
+## Local
+
+```bash
+python3 -m http.server 8000
+```
+
+Open http://localhost:8000
+
+## Deploy
+
+```bash
+git push origin master
+```
