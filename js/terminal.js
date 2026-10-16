@@ -2,7 +2,14 @@ import { profile, experience, projects, skills, education, certifications, certi
 import { answer, fallback } from "./ask.js";
 
 const COMMANDS = {
-  help: () => "Commands: about, experience, projects, project <name>, skills, education, contact, links, resume, ask <question>, theme, clear, exit\nAnything else is read as a question — try a project name or ask about his stack.",
+  help: () => [
+    "Commands: about, experience, projects, project <name>, skills, education, contact, links, resume, theme, clear, exit",
+    "Or just type naturally:",
+    "  who is he / tell me about him / about",
+    "  gitstart   (company — typos like gittsrat work too)",
+    "  optibus    (project name)",
+    "  has he done SRE work?",
+  ].join("\n"),
   about: () => `${profile.name}, ${profile.title}, ${profile.location}\n\n${profile.intro}`,
   whoami: () => COMMANDS.about(),
   experience: () => experience.map((e) => `${e.start} to ${e.end}  ${e.role}, ${e.company}`).join("\n"),

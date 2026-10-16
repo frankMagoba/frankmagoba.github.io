@@ -51,7 +51,7 @@ export function mountAskTerminal(root, { run, suggestions, title = "ask-franklin
     try { await loadSemantic((s) => line(`# ${s}`, "note")); smart.textContent = "smart search: on"; smart.setAttribute("aria-pressed", "true"); }
     catch { line("# Couldn't load the model, so keyword search stays on.", "note"); smart.textContent = "smart search: off"; smart.disabled = false; }
   });
-  line("# Ask about my work, type a project name, or help. Answers only quote this page.", "note");
+  line("# Try: about · gitstart · optibus · has he done SRE work? · help", "note");
 }
 
 // Default runner for a page without the full command set.
