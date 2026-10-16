@@ -2,7 +2,6 @@ import { profile, experience, projects, projectTags, skills, education, certific
 import { mountCertViewer } from "./certviewer.js";
 import { initTerminal, runCommand } from "./terminal.js";
 import { mountAskTerminal } from "./askterm.js";
-import { initHero } from "./hero.js";
 
 const $ = (s) => document.querySelector(s);
 const el = (tag, attrs = {}, ...kids) => {
@@ -70,4 +69,3 @@ mountAskTerminal($("#askterm"), {
 });
 
 initTerminal();
-initHero(document.getElementById("mono"));
