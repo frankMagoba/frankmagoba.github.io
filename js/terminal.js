@@ -1,9 +1,30 @@
 import { profile, experience, projects, skills, education, certifications, certificates, projectBlurb } from "./content.js";
 import { answer, fallback } from "./ask.js";
+import { scan, fetchRows } from "./visitor.js";
+
+const LOGO = [
+  " ______  __  __ ",
+  "|  ____||  \\/  |",
+  "| |__   | \\  / |",
+  "|  __|  | |\\/| |",
+  "| |     | |  | |",
+  "|_|     |_|  |_|",
+];
+
+// The visitor's own device, neofetch style. The logo drops on narrow screens so lines don't wrap.
+async function neofetch() {
+  const info = [
+    "visitor@frankmagoba.github.io", "-".repeat(29),
+    ...fetchRows(await scan()).map(([k, v]) => `${(k + ":").padEnd(9)}${v}`),
+    "", "Read locally. None of this left your browser.",
+  ];
+  if ((globalThis.innerWidth || 0) < 720) return info.join("\n");
+  return info.map((line, i) => (LOGO[i] || "").padEnd(LOGO[0].length + 3) + line).join("\n");
+}
 
 const COMMANDS = {
   help: () => [
-    "Commands: about, experience, projects, project <name>, skills, education, contact, links, resume, theme, clear, exit",
+    "Commands: about, experience, projects, project <name>, skills, education, contact, links, resume, neofetch, theme, clear, exit",
     "Or just type naturally:",
     "  who is he / tell me about him / about",
     "  gitstart   (company — typos like gittsrat work too)",
@@ -20,7 +41,8 @@ const COMMANDS = {
   links: () => Object.entries(profile.links).map(([k, v]) => `${k.padEnd(11)}${v}`).join("\n"),
   resume: () => { location.href = "/Resume/"; return "Opening the resume..."; },
   theme: () => { document.getElementById("theme").click(); return "Theme switched."; },
-  ls: () => "about  experience  projects  skills  education  contact  links  resume",
+  neofetch,
+  ls: () => "about  experience  projects  skills  education  contact  links  resume  neofetch",
   sudo: () => "Nice try.",
 };
 
@@ -123,7 +145,7 @@ export function initTerminal() {
   };
   const open = () => {
     if (!dlg.open) dlg.showModal();
-    if (!out.childElementCount) print("Type 'help', a project name, or just ask a question.");
+    if (!out.childElementCount) print("Type 'help', a project name, 'neofetch', or just ask a question.");
     input.focus();
   };
 

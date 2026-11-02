@@ -1,0 +1,43 @@
+/* Boot screen (js/boot.js): always dark, like the terminals */
+.boot{display:none}
+html.booting{overflow:hidden}
+html.booting .boot{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:1.5rem;background:#07090a;color:#cfd6d8;font:15px/1.6 var(--mono);border-bottom:1px solid #2dd4bf;box-shadow:0 0 40px rgba(45,212,191,.35);transition:transform .75s cubic-bezier(.7,0,.2,1)}
+html.booting .boot.out{transform:translateY(calc(-100% - 50px))}
+.boot-log{width:min(720px,100%);display:grid;gap:.3rem}
+.boot-log .ps1{color:#2dd4bf}
+.boot-log .hd{color:#a1a9ad;margin:.7rem 0 .45rem}
+.boot-log .ok{animation:boot-in .3s cubic-bezier(.2,.8,.2,1) both}
+.boot-log .ok::before{content:"[  ok  ] ";color:#2dd4bf;white-space:pre}
+.boot-log b{color:#f6f7f5;font-weight:600}
+.boot-log .end{margin-top:.7rem;color:#2dd4bf}
+.boot-log>:last-child::after{content:"";display:inline-block;width:.55em;height:1.1em;margin-left:3px;vertical-align:-.2em;background:#2dd4bf;animation:blink 1s steps(2) infinite}
+.boot-skip{position:absolute;left:0;right:0;bottom:max(1.5rem,env(safe-area-inset-bottom));margin:0;text-align:center;font-size:12px;letter-spacing:.08em;color:#6b7479;animation:fade-in .5s 1.5s both}
+@keyframes boot-in{from{opacity:0;transform:translateY(4px)}}
+@keyframes fade-in{from{opacity:0}}
+@keyframes blink{50%{opacity:0}}
+@media (max-width:560px){html.booting .boot{font-size:12.5px;place-items:start;padding-top:20vh}.boot-log .ok::before{content:"[ok] "}}
+
+/* Hero rises in as the boot screen leaves */
+html.enter .hero-text>*,html.enter .portrait{animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
+html.enter .hero-text>:nth-child(2){animation-delay:.07s}
+html.enter .hero-text>:nth-child(3){animation-delay:.14s}
+html.enter .hero-text>:nth-child(4){animation-delay:.21s}
+html.enter .hero-text>:nth-child(5){animation-delay:.28s}
+html.enter .hero-text>:nth-child(6){animation-delay:.35s}
+html.enter .portrait{animation-delay:.18s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+
+/* Hero stats */
+.stats{display:flex;flex-wrap:wrap;gap:1.25rem 2.25rem;margin:1.6rem 0 0;padding:0}
+.stats div{display:flex;flex-direction:column-reverse}
+.stats dd{margin:0;font:600 2rem/1.1 var(--display-font);letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--text)}
+.stats dt{margin-top:.2rem;font:600 .72rem/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* Reveal on scroll (js/reveal.js) */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media print{.rv{opacity:1;transform:none}}
+
+/* Sound toggle */
+#sound[aria-pressed=true]{color:var(--accent);border-color:var(--accent)}
+#sound[aria-pressed=true] .off,#sound[aria-pressed=false] .on{display:none}
