@@ -6,14 +6,12 @@ Static HTML, CSS and ES modules. No build, no framework. GitHub Pages publishes 
 
 ## What’s on the page
 
-- Hero with portrait, short intro, and a labeled contact panel (email, resume, LinkedIn, GitHub).
-- Project grid with area filters, driven by `js/content.js`.
-- Experience timeline, skills, education and certificate thumbnails.
+- Hero (`js/hero.js`, `css/hero.css`): a short pitch beside a CSS 3D laptop whose lock screen shows the visitor's clock and my name. Scrolling plugs in the cable, types the password, signs in and runs a terminal; drag to spin it, click the screen to sign in.
 - Ask box (`js/askterm.js`) that answers from the same content by keyword first. Optional “smart search” loads all-MiniLM-L6-v2 in the browser via transformers.js and only quotes what’s already on the page — it doesn’t invent answers.
 - Full terminal: press `` ` `` or the `>_` control. Commands live in `js/terminal.js`. `neofetch` prints the visitor's own device.
 - Boot screen (`js/boot.js`): on the first visit in a session, a short log of what the visitor's browser exposes (system, GPU, screen, local time against Nairobi), then it slides away. `js/visitor.js` reads it all locally, with no network requests or permission prompts. Skipped for deep links and reduced motion; add `?boot` to the URL to replay it.
 - Sound (`js/sound.js`): synthesised with the Web Audio API, no audio files. Off until the speaker button turns it on, and remembered.
-- Reveal on scroll and the hero's count-up stats live in `js/reveal.js`; styles for all of the above are in `css/fx.css`.
+- Reveal on scroll lives in `js/reveal.js`; boot screen, entrance and reveal styles are in `css/fx.css`.
 - Work (`js/work.js`): projects as a numbered list; opening one runs a build, test and review pipeline before its details show.
 - Skills (`js/toolbox.js`): skill bubbles in glass bins on one canvas with a small physics sim. Drag, shake, put back, or click a bubble to see where the skill shows up on the page (worked out in `js/main.js` from project stacks and write-ups). Screen readers get the same skills as plain lists.
 - Now building (`js/building.js`): Keyhold. Drag the key into the lock (or click it) and its details decrypt from scrambled text. Reads the Keyhold entry from `projects`.
