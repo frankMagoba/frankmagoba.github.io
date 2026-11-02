@@ -4,7 +4,8 @@ import { initTerminal, runCommand } from "./terminal.js";
 import { mountAskTerminal } from "./askterm.js";
 import { runBoot } from "./boot.js";
 import { wireSound } from "./sound.js";
-import { reveal, countUp } from "./reveal.js";
+import { reveal } from "./reveal.js";
+import { mountHero } from "./hero.js";
 import { mountWork } from "./work.js";
 import { mountToolbox } from "./toolbox.js";
 import { mountCareer } from "./career.js";
@@ -20,18 +21,13 @@ const el = (tag, attrs = {}, ...kids) => {
 };
 const tagList = (items) => el("ul", { class: "tags" }, ...items.map((t) => el("li", {}, t)));
 
-$("#lead").textContent = profile.tagline;
-$("#intro").textContent = profile.intro;
 $("#year").textContent = new Date().getFullYear();
 
 const firstYear = Math.min(...experience.map((e) => +e.start.match(/\d{4}/)[0]));
-const stats = [
-  [new Date().getFullYear() - firstYear, "years"],
-  [new Set(experience.map((e) => e.company.replace(/\s*\(.*\)$/, ""))).size, "companies"],
-  [projects.length, "projects"],
-  [certificates.length, "certificates"],
-];
-$("#stats").append(...stats.map(([n, label]) => el("div", {}, el("dt", {}, label), el("dd", { "data-count": n }, String(n)))));
+mountHero($(".hero"), {
+  name: profile.name, title: profile.title, location: profile.location, years: new Date().getFullYear() - firstYear,
+  projects: projects.map((p) => p.name.replace(/\s*\(.*\)$/, "").split(" ")[0].toLowerCase()),
+});
 
 const filter = mountWork($("#projects"), projects, projectTags);
 const count = $("#proj-count");
@@ -48,9 +44,8 @@ if (keyhold) mountBuilding($("#building"), keyhold);
 else $("#building").hidden = true;
 
 mountCareer($("#career"), experience, education);
-const firstStart = Math.min(...experience.map((e) => +e.start.match(/\d{4}/)[0]));
 const companies = new Set(experience.map((e) => e.company.replace(/\s*\(.*\)$/, ""))).size;
-$("#career-lede").textContent = `${experience.length} roles at ${companies} companies since ${firstStart}, plus the degree that started it. Drag the plug along the cable, click a year, or use the arrow keys.`;
+$("#career-lede").textContent = `${experience.length} roles at ${companies} companies since ${firstYear}, plus the degree that started it. Drag the plug along the cable, click a year, or use the arrow keys.`;
 
 // Screen readers get the skills as plain lists; the canvas is decoration over the same data.
 $("#skill-list").append(...Object.entries(skills).map(([k, v]) => el("div", {}, el("h3", {}, k), tagList(v))));
@@ -143,4 +138,4 @@ addEventListener("scroll", () => {
 // Sound first, so a click that skips the boot screen also unlocks audio for its closing chime.
 wireSound($("#sound"));
 reveal(document.querySelectorAll("main > section:not(.hero) > :is(.kicker, h2, .lede), #askterm, .work > li, .kh-gate, .kh-vault, #career, .tb, .creds > :is(.sub-k, .sub, .lede), .edu, .cert, .contact-cta"));
-runBoot().then(() => document.querySelectorAll("#stats [data-count]").forEach(countUp));
+runBoot();

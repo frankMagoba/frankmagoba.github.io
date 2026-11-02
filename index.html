@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="/css/askterm.css">
   <link rel="stylesheet" href="/css/fx.css">
   <link rel="stylesheet" href="/css/sections.css">
+  <link rel="stylesheet" href="/css/hero.css">
   <script>
     // Boot screen: first visit in a session only, never for deep links or reduced motion. ?boot replays it.
     // Set here, before first paint, so the page never flashes first. Modules run before DOMContentLoaded, so if
@@ -68,34 +69,64 @@
 
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-text">
-      <p class="prompt">~/franklin $ whoami</p>
-      <h1 id="hero-title">Franklin Magoba</h1>
-      <p class="lead" id="lead"></p>
-      <p id="intro" class="muted"></p>
-      <nav class="cta" aria-label="Contact and profiles">
-        <a class="cta-row" href="mailto:franklinmagoba4@gmail.com">
-          <span class="cta-k">email</span>
-          <span class="cta-v">franklinmagoba4@gmail.com</span>
-        </a>
-        <a class="cta-row" href="/Resume/">
-          <span class="cta-k">resume</span>
-          <span class="cta-v">frankmagoba.github.io/Resume</span>
-        </a>
-        <a class="cta-row" href="https://www.linkedin.com/in/franklin-magoba" rel="noopener">
-          <span class="cta-k">linkedin</span>
-          <span class="cta-v">/in/franklin-magoba</span>
-        </a>
-        <a class="cta-row" href="https://github.com/frankMagoba" rel="noopener">
-          <span class="cta-k">github</span>
-          <span class="cta-v">/frankMagoba</span>
-        </a>
-      </nav>
-      <dl id="stats" class="stats"></dl>
+      <div class="hero-pin">
+        <div class="hero-text">
+          <p class="kicker">Software engineer · Nairobi</p>
+          <h1 id="hero-title"><span class="sr">Franklin Magoba, software engineer. </span>I build software that <b>ships and stays up.</b></h1>
+          <p class="hero-lede"><span data-years>Seven</span> years of APIs, web and mobile apps, and the cloud that keeps them running, built remotely with US and European teams.</p>
+          <p class="hero-facts"><span>TypeScript · Python · React · AWS</span><span>Remote · US + EU hours</span><span>Press <kbd>`</kbd> for the terminal</span></p>
+          <p class="hero-try"><i aria-hidden="true"></i>Try it: drag to spin the laptop, click the screen to sign in</p>
+        </div>
+
+        <div class="lt-stage" aria-hidden="true">
+          <div class="lt">
+            <div class="lt-floor"><i class="lt-shadow"></i></div>
+            <div class="lt-desk">
+              <svg viewBox="0 0 220 180" preserveAspectRatio="none">
+                <g class="lt-plug">
+                  <path class="cable" d="M51 70 C 30 70, 36 118, 10 130 S -30 170, -60 176" />
+                  <path class="cable hi" d="M51 69.4 C 30 69.4, 35.4 117.4, 9.6 129.4 S -30 169.4, -60 175.4" />
+                  <rect class="boot" x="50.8" y="67.4" width="6.5" height="5.2" rx="1.2" />
+                  <rect class="tip" x="57.2" y="68.4" width="3.4" height="3.2" rx=".6" />
+                </g>
+              </svg>
+            </div>
+            <div class="lt-base">
+              <div class="lt-kb"></div>
+              <div class="lt-pad"></div>
+              <i class="lt-edge front"></i><i class="lt-edge left"><b class="port"></b><b class="port two"></b></i><i class="lt-edge right"></i>
+            </div>
+            <div class="lt-lid">
+              <div class="lt-back"><i></i></div>
+              <div class="lt-screen">
+                <i class="notch"></i>
+                <div class="lt-display">
+                  <div class="lock">
+                    <p class="date" data-date></p>
+                    <p class="clock" data-clock></p>
+                    <div class="user">
+                      <span class="av"></span>
+                      <b class="who"></b>
+                      <span class="pw"><em>Enter Password</em><span class="pw-dots"></span></span>
+                      <small class="hint">Touch ID or Enter Password</small>
+                      <small class="charge">⚡ Charging</small>
+                    </div>
+                  </div>
+                  <div class="desk">
+                    <div class="menubar"><b></b><span>Finder</span><span>File</span><span>Edit</span><span>View</span><em data-clock></em></div>
+                    <div class="term">
+                      <div class="term-bar"><i></i><i></i><i></i><span>Terminal</span></div>
+                      <div class="term-body"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-cue" aria-hidden="true"><span>Scroll to sign in</span><i></i></div>
       </div>
-      <figure class="portrait">
-        <img src="/assets/headshot.jpg" width="1200" height="1200" alt="Portrait of Franklin Magoba" decoding="async" fetchpriority="high">
-      </figure>
     </section>
 
     <section id="ask" aria-labelledby="ask-title">
