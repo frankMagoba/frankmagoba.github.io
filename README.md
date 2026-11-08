@@ -12,7 +12,7 @@ Static HTML, CSS and ES modules. No build, no framework. GitHub Pages publishes 
 - Boot screen (`js/boot.js`): on the first visit in a session, a short log of what the visitor's browser exposes (system, GPU, screen, local time against Nairobi), then it slides away. `js/visitor.js` reads it all locally, with no network requests or permission prompts. Skipped for deep links and reduced motion; add `?boot` to the URL to replay it.
 - Sound (`js/sound.js`): synthesised with the Web Audio API, no audio files. Off until the speaker button turns it on, and remembered.
 - Reveal on scroll lives in `js/reveal.js`; boot screen, entrance and reveal styles are in `css/fx.css`.
-- Work (`js/work.js`): projects as a numbered list; opening one runs a build, test and review pipeline before its details show.
+- Work (`js/work.js`): each project as a row with its tech stack on the right; opening one runs a build, test and review pipeline before its details show.
 - Skills (`js/toolbox.js`): skill bubbles in glass bins on one canvas with a small physics sim. Drag, shake, put back, or click a bubble to see where the skill shows up on the page (worked out in `js/main.js` from project stacks and write-ups). Screen readers get the same skills as plain lists.
 - Now building (`js/building.js`): Keyhold. Drag the key into the lock (or click it) and its details decrypt from scrambled text. Reads the Keyhold entry from `projects`.
 - Experience (`js/career.js`): a cable with a port per role plus the degree; drag the plug, click a year or use the arrow keys. "Show the whole list" opens every role.

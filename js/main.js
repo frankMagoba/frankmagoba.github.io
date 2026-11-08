@@ -29,9 +29,7 @@ mountHero($(".hero"), {
   projects: projects.map((p) => p.name.replace(/\s*\(.*\)$/, "").split(" ")[0].toLowerCase()),
 });
 
-const filter = mountWork($("#projects"), projects, projectTags);
-const count = $("#proj-count");
-const applyFilter = (key) => { const n = filter(key); count.textContent = `${n} project${n === 1 ? "" : "s"}`; };
+const applyFilter = mountWork($("#projects"), projects);
 for (const [key, label] of Object.entries(projectTags)) {
   const b = el("button", { type: "button", class: "chip", "aria-pressed": String(key === "all") }, label);
   b.addEventListener("click", () => { $("#proj-filter").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b))); applyFilter(key); });
