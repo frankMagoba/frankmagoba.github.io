@@ -26,7 +26,7 @@ export function mountCerts(root, certs, base, viewer) {
           <span class="hint" aria-hidden="true">Flip ↻</span>
         </button>
         <div class="face back" inert>
-          <img src="${base}${c.file}-thumb.webp" alt="" loading="lazy" decoding="async" width="480" height="${c.file === "alc-badge" ? 270 : 371}">
+          <img src="${base}${c.file}-thumb.webp" alt="" loading="lazy" decoding="async"${c.bg ? ` style="background:${esc(c.bg)}"` : ""} width="480" height="${c.file === "alc-badge" ? 270 : 371}">
           <div class="acts"><button type="button" class="pill-btn open">Open ↗</button><button type="button" class="pill-btn back-btn">Flip back ↺</button></div>
         </div>
       </div>

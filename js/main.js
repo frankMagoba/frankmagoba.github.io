@@ -1,4 +1,4 @@
-import { profile, experience, projects, projectTags, skills, education, certifications, certificates } from "./content.js";
+import { profile, experience, projects, projectTags, skills, education, certificates } from "./content.js";
 import { mountCertViewer } from "./certviewer.js";
 import { initTerminal, runCommand } from "./terminal.js";
 import { mountAskTerminal } from "./askterm.js";
@@ -57,7 +57,7 @@ $("#edu").append(...education.map((e) => {
 // The thumbnail grid stays hidden; the cards open its macOS-style window.
 const certWindow = mountCertViewer($("#cert-viewer"), certificates, "assets/certs/");
 mountCerts($("#certs"), certificates, "assets/certs/", certWindow);
-$("#certs-lede").textContent = `${certifications.join(" and ")}, and the ${certificates.length} course certificates below. Flip one to see the certificate, then open it full size.`;
+$("#certs-lede").textContent = "The newest is micro1's Senior Software Engineer / AI Specialist certification, which I earned by passing its AI interview in July 2025. The rest come from Microsoft Azure training and ALC. Flip a card to see the certificate, then open it full size.";
 
 // Theme
 const root = document.documentElement;
